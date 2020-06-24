@@ -1,0 +1,30 @@
+GWENDOLEN
+
+:name: AV
+
+:Initial Beliefs:
+at(2,0)
+destination(2,4)
+
+:Reasoning Rules:
+reached(X,Y) :- destination(X,Y), at(X,Y);
+reach_destination :- reached(X,Y);
+
+:Initial Goals:
+reach_destination [achieve]
+
+:Plans:
+
++!reach_destination [achieve] : {~B reached(2,4)} <- +!move[perform], *at(X,Y);
+
++!move [perform] : {B  must_stop(X,Y), B at(X,Y), ~B stopped(X,Y)} <- wait(stopsign), +stopped(X,Y);
++!move [perform] : {B  red_stop_light, ~B reached(X,Y)} <- wait(trafficlight);
++!move [perform] : {B  ahead_is_not_clear, ~B reached(X,Y)} <- wait(clearpath), *at(X,Y);
++!move [perform] : {~B ahead_is_clear, ~B reached(X,Y)} <- check_ahead(north);
++!move [perform] : {B  ahead_is_clear, ~B reached(X,Y)} <- drive(north), *at(X,Y);
+
++at(2,2) : {True} <- +crossing;
++at(2,4) : {True} <- print(done);
++at(X,Y) : {True} <- print("new position");
+
++crossing : {True} <- print("at intersection");

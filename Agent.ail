@@ -1,0 +1,7 @@
+mas.file = /src/examples/tcc/agent.gwen
+mas.builder = gwendolen.GwendolenMASBuilder
+
+env = tcc.SimpleEnv
+
+log.info = ail.mas.DefaultEnvironment
+log.format = brief
